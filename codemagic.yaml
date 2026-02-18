@@ -17,6 +17,28 @@ workflows:
       - name: Install dependencies
         script: npm install --prefix frontend
       - name: Build React Web App
+        # 👇 ADDED CI=false HERE 👇
+        script: CI=false npm run build --prefix frontend
+      - name: Sync Capacitor Android
+        script: |
+          cd frontend
+          npx cap sync android
+      - name: Build Android APK
+        script: |
+          cd frontend/android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+      - name: Debug File System
+        script: |
+          echo "Current Directory:"
+          pwd
+          echo "Files in this directory:"
+          ls -la
+          echo "Files inside frontend directory:"
+          ls -la frontend/
+      - name: Install dependencies
+        script: npm install --prefix frontend
+      - name: Build React Web App
         script: npm run build --prefix frontend
       - name: Sync Capacitor Android
         script: |
