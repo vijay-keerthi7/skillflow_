@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Environment Variables (CRITICAL)
+.env
+.env.test
+.env.production
+
+# Compiled code
+dist/
+# frontend/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Database (if using local SQLite or temp files)
+*.db
+*.sqlite
+
+# System files
+.DS_Store
+.vscode/

@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- 1. THEME DEFINITIONS --- */
+:root {
+  /* Default: Sunset Theme */
+  --bg-primary: #0f021a;
+  --accent-primary: #ff3d77; /* Magenta */
+  --accent-secondary: #00f2ff; /* Cyan */
+  --accent-vibrant: #a100ff; /* Purple */
+  --text-main: #ffffff;
+}
+
+[data-theme='ocean'] {
+  --bg-primary: #051937;
+  --accent-primary: #004d7a;
+  --accent-secondary: #00bf72;
+  --accent-vibrant: #a8eb12;
+  --text-main: #ffffff;
+}
+
+[data-theme='warmth'] {
+  --bg-primary: #330519;
+  --accent-primary: #ffec3d; /* Yellow */
+  --accent-secondary: #ff3d77; /* Rose */
+  --accent-vibrant: #9e0059; /* Deep Red */
+  --text-main: #ffffff;
+}
+
+/* --- 2. GLOBAL RESET & MOBILE UX --- */
+/* --- 2. GLOBAL RESET & MOBILE UX --- */
+html {
+  /* Use svh (small viewport height) to ignore the address bar */
+  height: 100svh;
+  background-color: var(--bg-primary);
+  overflow: hidden; 
+}
+
+body {
+  /* Use dvh (dynamic) so it changes when keyboard opens */
+  height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-primary);
+  /* REMOVED position: fixed here as it causes the 'sliding' header issue */
+  overflow: hidden;
+}
+
+/* Forces the keyboard to push the content instead of overlapping it */
+@supports (interactive-widget: resizes-content) {
+  html {
+    interactive-widget: resizes-content;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* Input Optimization */
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input:focus {
+  font-size: 16px !important; /* Prevents iOS auto-zoom blink */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* --- 3. CUSTOM UTILITIES & ANIMATIONS --- */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+@keyframes navbar-pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.nav-pill-active {
+  background: white;
+  color: #1D546D;
+  box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.1);
+}
+
+/* Hide scrollbars globally for the "Infinite" look */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.fixed.bottom-6 {
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+}
+/* In your index.css or App.css */
+
+
+header {
+  /* Avoid using !important; instead, ensure content stays centered */
+  min-height: calc(4rem + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* Prevents header from disappearing */
+}
+
+/* Ensure Navbar respects the home-bar on iPhone/Android */
+nav, .fixed-navbar {
+  padding-bottom: env(safe-area-inset-bottom, 16px) !important;
+}
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh; /* Dynamic height is the key */
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.chat-messages-area {
+  flex: 1 1 auto; /* Grow to fill, but allow shrinking */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+}
+
+.chat-input-area {
+  flex-shrink: 0;
+  padding-bottom: env(safe-area-inset-bottom, 10px);
+}
