@@ -7,15 +7,21 @@ workflows:
       java: 17
     scripts:
       - name: Install dependencies
-        script: npm install
+        script: |
+          cd frontend
+          npm install
       - name: Build React Web App
-        script: npm run build
+        script: |
+          cd frontend
+          npm run build
       - name: Sync Capacitor Android
-        script: npx cap sync android
+        script: |
+          cd frontend
+          npx cap sync android
       - name: Build Android APK
         script: |
-          cd android
+          cd frontend/android
           chmod +x gradlew
           ./gradlew assembleDebug
     artifacts:
-      - android/app/build/outputs/apk/**/*.apk
+      - frontend/android/app/build/outputs/apk/**/*.apk
